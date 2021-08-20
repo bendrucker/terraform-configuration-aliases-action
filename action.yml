@@ -11,7 +11,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: go get github.com/hashicorp/terraform-config-inspect
+    - run: |
+        echo "::group::Install github.com/hashicorp/terraform-config-inspect"
+        go get github.com/hashicorp/terraform-config-inspect
+        echo "::endgroup::"
       shell: bash
       env:
         GO111MODULE: 'on'
