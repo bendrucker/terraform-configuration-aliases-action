@@ -20,6 +20,8 @@ runs:
         GO111MODULE: 'on'
     - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
+    - run: 'Generating providers for configuration_aliases in Terraform module: "${{ inputs.path }}"'
+      shell: bash
     - run: ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
       shell: bash
       working-directory: ${{ inputs.path }}
