@@ -14,7 +14,5 @@ runs:
         GO111MODULE: 'on'
     - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
-    - run: go get github.com/hashicorp/terraform-config-inspect
-      shell: bash
-    - run: ${{ github.action_path }}/providers.sh > aliased-providers.tf.json
+    - run: cd "${{ inputs.path }}" && ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
       shell: bash

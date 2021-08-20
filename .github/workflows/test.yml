@@ -1,0 +1,25 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - run: terraform init -chdir example/
+      - id: prevalidate
+        run: terraform validate -chdir example/
+        continue-on-error: true
+      - if: steps.prevalidate.outcome != 'failure'
+        run: echo "expected initial terraform validate to fail" && exit 1
+      - uses: ./
+        with:
+          path: example/
+      - id: postvalidate
+        run: terraform validate -chdir example/
