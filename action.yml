@@ -1,0 +1,11 @@
+name: Terraform Configuration Aliases
+description: Generate aliased provider blocks that satisfy required configuration aliases
+runs:
+  using: composite
+  steps:
+    - run: go get github.com/hashicorp/terraform-config-inspect
+      env:
+        GO111MODULE: 'on'
+    - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+    - run: go get github.com/hashicorp/terraform-config-inspect
+    - run: ${{ github.action_path }}/providers.sh > aliased-providers.tf.json
