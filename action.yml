@@ -7,7 +7,7 @@ inputs:
   path:
     description: The path to the Terraform module
     required: false
-    default: ''
+    default: './'
 runs:
   using: composite
   steps:
@@ -17,5 +17,6 @@ runs:
         GO111MODULE: 'on'
     - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
-    - run: cd "${{ inputs.path }}" && ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
+    - run: ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
       shell: bash
+      working-directory: ${{ inputs.path }}
