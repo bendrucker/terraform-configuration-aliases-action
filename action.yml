@@ -1,5 +1,8 @@
 name: Terraform Configuration Aliases
 description: Generate aliased provider blocks that satisfy required configuration aliases
+branding:
+  color: purple
+  icon: code
 inputs:
   path:
     description: The path to the Terraform module
