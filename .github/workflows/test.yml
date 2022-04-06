@@ -28,3 +28,6 @@ jobs:
       - id: post
         run: terraform validate
         working-directory: example/
+      - name: Assert "providers" output is set
+        run: |
+          [[ ${{ steps.post.outputs.providers }} == '{"provider":{"null":[{"alias":"alt"}]}}'
