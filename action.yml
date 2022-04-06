@@ -23,7 +23,7 @@ runs:
     - run: |
         echo "Generating providers for configuration_aliases in Terraform module: ${{ inputs.path }}"
         ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
-        providers=$(jq -c < aliased-providers.tf.json)
+        providers=$(jq -r -c < aliased-providers.tf.json)
         echo "::set-output name=providers::${providers}"
       shell: bash
       working-directory: ${{ inputs.path }}
