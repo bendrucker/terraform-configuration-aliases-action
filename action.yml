@@ -8,6 +8,10 @@ inputs:
     description: The path to the Terraform module
     required: false
     default: './'
+outputs:
+  providers:
+    description: The generated provider configuration as a JSON string
+    value: ${{ steps.aliases.outputs.providers }}
 runs:
   using: composite
   steps:
@@ -20,8 +24,11 @@ runs:
         GO111MODULE: 'on'
     - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
-    - run: |
+    - id: aliases
+      run: |
         echo "Generating providers for configuration_aliases in Terraform module: ${{ inputs.path }}"
         ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
+        providers=$(jq -c < aliased-providers.tf.json)
+        echo "::set-output name=providers::${providers}"
       shell: bash
       working-directory: ${{ inputs.path }}
