@@ -12,14 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
-      - run: terraform -chdir=example/ init
-      - id: prevalidate
-        run: terraform -chdir=example/ validate
+      - run: terraform init
+        working-directory: example/
+      - id: pre
+        run: terraform validate
+        working-directory: example/
         continue-on-error: true
-      - if: steps.prevalidate.outcome != 'failure'
-        run: echo "expected initial terraform validate to fail" && exit 1
-      - uses: ./
+      - name: Assert "terraform validate" fails before action runs
+        if: steps.pre.outcome != 'failure'
+        run: exit 1
+      - name: bendrucker/terraform-configuration-aliases-action
+        uses: ./
         with:
           path: example/
-      - id: postvalidate
-        run: terraform -chdir=example/ validate
+      - id: post
+        run: terraform validate
+        working-directory: example/

@@ -12,7 +12,7 @@ runs:
   using: composite
   steps:
     - run: |
-        echo "::group::Install github.com/hashicorp/terraform-config-inspect"
+        echo "::group::go get github.com/hashicorp/terraform-config-inspect"
         go get github.com/hashicorp/terraform-config-inspect
         echo "::endgroup::"
       shell: bash
@@ -22,7 +22,6 @@ runs:
       shell: bash
     - run: |
         echo "Generating providers for configuration_aliases in Terraform module: ${{ inputs.path }}"
-      shell: bash
-    - run: ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
+        ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
       shell: bash
       working-directory: ${{ inputs.path }}
