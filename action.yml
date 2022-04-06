@@ -11,19 +11,16 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install terraform-config-inspect
-      run: |
+    - run: |
         echo "::group::go get github.com/hashicorp/terraform-config-inspect"
         go get github.com/hashicorp/terraform-config-inspect
         echo "::endgroup::"
       shell: bash
       env:
         GO111MODULE: 'on'
-    - name: Add GOBIN to PATH
-      run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+    - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
-    - name: Generate aliased-providers.tf.json file
-      run: |
+    - run: |
         echo "Generating providers for configuration_aliases in Terraform module: ${{ inputs.path }}"
         ${{ github.action_path }}/providers.sh | tee aliased-providers.tf.json
       shell: bash
