@@ -18,3 +18,9 @@ steps:
 | Name | Description            | Default |
 |------|------------------------|---------|
 | path | The path to the module | `''`    |
+
+### Outputs
+
+| Name      | Description                                           |
+|-----------|-------------------------------------------------------|
+| providers | The generated provider configuration as a JSON string |
