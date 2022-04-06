@@ -22,6 +22,7 @@ jobs:
         if: steps.pre.outcome != 'failure'
         run: exit 1
       - name: bendrucker/terraform-configuration-aliases-action
+        id: aliases
         uses: ./
         with:
           path: example/
@@ -30,4 +31,4 @@ jobs:
         working-directory: example/
       - name: Assert "providers" output is set
         run: |
-          [[ ${{ steps.post.outputs.providers }} == '{"provider":{"null":[{"alias":"alt"}]}}'
+          [[ ${{ steps.aliases.outputs.providers }} == '{"provider":{"null":[{"alias":"alt"}]}}'
