@@ -31,4 +31,4 @@ jobs:
         working-directory: example/
       - name: Assert "providers" output is set
         run: |
-          [[ '${{ steps.aliases.outputs.providers }}' == '{"provider":{"null":[{"alias":"alt"}]}}'
+          [[ '${{ steps.aliases.outputs.providers }}' == '{"provider":{"null":[{"alias":"alt"}]}}' ]]
