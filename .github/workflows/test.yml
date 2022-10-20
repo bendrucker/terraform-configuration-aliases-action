@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.18'
       - uses: hashicorp/setup-terraform@v2
       - run: terraform init
         working-directory: example/
