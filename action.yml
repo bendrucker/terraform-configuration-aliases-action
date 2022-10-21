@@ -22,7 +22,13 @@ runs:
     - run: |
         echo "::group::go install github.com/hashicorp/terraform-config-inspect"
         echo "version: $VERSION"
-        go install github.com/hashicorp/terraform-config-inspect@$VERSION
+
+        cd "$(mktemp -d)"
+        go mod init m
+
+        go get github.com/hashicorp/terraform-config-inspect@$VERSION
+        go install github.com/hashicorp/terraform-config-inspect
+
         echo "::endgroup::"
       shell: bash
       env:
