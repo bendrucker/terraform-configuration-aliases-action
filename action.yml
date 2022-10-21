@@ -8,7 +8,10 @@ inputs:
     description: The path to the Terraform module
     required: false
     default: './'
-  terraform-config-inspect-version: 81db043ad408976450c4af995dbe69ae70b26c82
+  terraform-config-inspect-version:
+    description: The version of http://github.com/hashicorp/terraform-config-inspect to install
+    required: false
+    default: 81db043ad408976450c4af995dbe69ae70b26c82
 outputs:
   providers:
     description: The generated provider configuration as a JSON string
