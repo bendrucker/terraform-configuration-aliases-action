@@ -8,6 +8,7 @@ inputs:
     description: The path to the Terraform module
     required: false
     default: './'
+  terraform-config-inspect-version: 81db043ad408976450c4af995dbe69ae70b26c82
 outputs:
   providers:
     description: The generated provider configuration as a JSON string
@@ -16,12 +17,13 @@ runs:
   using: composite
   steps:
     - run: |
-        echo "::group::go get github.com/hashicorp/terraform-config-inspect"
-        go get github.com/hashicorp/terraform-config-inspect
+        echo "::group::go install github.com/hashicorp/terraform-config-inspect"
+        echo "version: $VERSION"
+        go install github.com/hashicorp/terraform-config-inspect@$VERSION
         echo "::endgroup::"
       shell: bash
       env:
-        GO111MODULE: 'on'
+        VERSION: ${{ inputs.version }}
     - run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       shell: bash
     - id: aliases
