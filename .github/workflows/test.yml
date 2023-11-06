@@ -29,6 +29,12 @@ jobs:
       - id: post
         run: terraform validate
         working-directory: example/
-      - name: Assert "providers" output is set
-        run: |
-          [[ '${{ steps.aliases.outputs.providers }}' == '{"provider":{"null":[{"alias":"alt"}]}}' ]]
+      - uses: bendrucker/assert-json-equals-action@c06aeb3024329b4176eb379f6eec08df07208c1e
+        with:
+          expected: |
+            {
+              "provider": {
+                "null": [{"alias":"alt"}]
+              }
+            }
+          actual: ${{ steps.aliases.outputs.providers }}
